@@ -328,7 +328,58 @@ namespace Extensions
             //double t = this.vessel.orbit.GetTimeToTrue(anomaly);
             return tgt_orb.GetTimeToTrue(tgta) + (p*orbitnum);
         }
-
+			
+			/// <summary>
+			/// Find the Intersections of two orbits
+			/// </summary>
+			/// <returns>
+			/// 0 for no intersections found, 1 for 1, 2 for 2
+			/// True anomaly of intersections in out intersect1 and intersect2
+			/// </returns>
+			/// <param name='orbit'>
+			/// Orbit.
+			/// </param>
+			/// <param name='tgtorbit'>
+			/// Tgtorbit.
+			/// </param>
+			/// <param name='intersect1'>
+			/// Intsect1.
+			/// </param>
+			/// <param name='intersect2'>
+			/// Intsect2.
+			/// </param>
+			
+		public static int FindIntersectSimple (this Orbit orbit, Orbit tgtorbit, out double intersect1, out double intersect2)// Doesn't work, just learning to use github
+		{
+			double anomaly = 0;
+			intersect1 = 361;
+			intersect2 = 361;
+			int div = 50;
+			double range = 360;
+			double lowest = 1e10;
+			int count = 0;
+			while (lowest>100) {
+				for (int i=0; i<div; i++) {
+					double j;
+					anomaly += (i / div) * range;
+					j = Math.Abs (orbit.f (tgtorbit, anomaly));
+					if (i == 0) {
+						lowest = j;
+						intersect1 = anomaly;
+					}
+					if (j < lowest) {
+						lowest = j;
+						intersect1 = anomaly;
+					}
+				}
+				range = range / 2;
+				anomaly = intersect1 - range / 2;
+				count++;
+				if (count > 30)
+					return 2;
+			}
+			return 0;
+		}
         public static double f(this Orbit orbit, Orbit tgt_orbit, double x)
         {
             double rad = Math.PI/180;
