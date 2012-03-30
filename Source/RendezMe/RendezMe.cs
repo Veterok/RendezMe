@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class RendezMe : Part
 {
+
+//advanced autopilot capabilities can be turned on or off in the .cfg file with the automation variable.
+	public bool automation = true;
+
     #region UI State
 
     protected Rect WindowPos;
@@ -276,7 +280,7 @@ public class RendezMe : Part
         if (!CheckVessel())
         {
             _flyByWire = false;
-            Mode = UIMode.SELECTED;
+            Mode = UIMode.VESSELS;
         }
 
         if (GUILayout.Button((FlightGlobals.Vessels[_selectedVesselIndex].vesselName), sty, GUILayout.ExpandWidth(true)))
@@ -318,13 +322,13 @@ public class RendezMe : Part
         GUILayout.Box("Time to DN : " +
                       vessel.orbit.GetTimeToRelDN(FlightGlobals.Vessels[_selectedVesselIndex].orbit).ToString("F2"));
         GUILayout.Box("Relative Inclination :" + _relativeInclination.ToString("F2"));
-
-        if(GUILayout.Button(_autoAlign ? "ALIGNING" : "Auto-Align", sty, GUILayout.ExpandWidth(true)))
-        {
-            _autoAlignBurnTriggered = false;
-            _autoAlign = !_autoAlign;
-        }
-
+		if(automation==true){
+        	if(GUILayout.Button(_autoAlign ? "ALIGNING" : "Auto-Align", sty, GUILayout.ExpandWidth(true)))
+       	  	{
+           	 _autoAlignBurnTriggered = false;
+           	 _autoAlign = !_autoAlign;
+      		}
+		}
         if (_flyByWire == false)
         {
             if (GUILayout.Button("Orbit Normal", sty, GUILayout.ExpandWidth(true)))
@@ -389,11 +393,13 @@ public class RendezMe : Part
 
         GUILayout.Box("Closest Approach on Orbit " + _closestApproachOrbit.ToString());
         GUILayout.Box("Min Separation (sec) : " + _minimumPredictedTimeFromTarget.ToString("f1"));
-
+		
+		if (automation ==true){
         if(GUILayout.Button(_autoPhaser ? _autoPhaserState.ToString() : "Auto Sync", sty, GUILayout.ExpandWidth(true)))
         {
             _autoPhaser = !_autoPhaser;
             _autoPhaserState = AutoPhaserState.Step1WaitForTargetApsis;
+        }
         }
     }
 
@@ -406,9 +412,7 @@ public class RendezMe : Part
         }
 
         Vessel selectedVessel = FlightGlobals.Vessels[_selectedVesselIndex] as Vessel;
-
-        //the above check should prevent a crash when the vessel we are looking for is destroyed
-        //learn how to use list.exists etc...
+        
         if (GUILayout.Button(selectedVessel.vesselName, sty, GUILayout.ExpandWidth(true)))
         {
             _flyByWire = false;
@@ -422,13 +426,16 @@ public class RendezMe : Part
         // Take the relative velocity and project into ship local space.
         _localRelativeVelocity = vessel.transform.worldToLocalMatrix.MultiplyVector(_relativeVelocity);
         _localRelativePosition = vessel.transform.worldToLocalMatrix.MultiplyPoint(selectedVessel.transform.position);
-
-        if(GUILayout.Button(_killRelativeVelocity == false ? "Kill Rel Vel" : "FIRING", sty, GUILayout.ExpandWidth(true)))
-            _killRelativeVelocity = !_killRelativeVelocity;
-
-        if (GUILayout.Button(_homeOnRelativePosition == false ? "Home on Y+ 5m" : "HOMING", sty, GUILayout.ExpandWidth(true)))
-            _homeOnRelativePosition = !_homeOnRelativePosition;
-
+		
+		if (automation ==true)
+		{
+	        if(GUILayout.Button(_killRelativeVelocity == false ? "Kill Rel Vel" : "FIRING", sty, GUILayout.ExpandWidth(true)))
+	            _killRelativeVelocity = !_killRelativeVelocity;
+	
+	        if (GUILayout.Button(_homeOnRelativePosition == false ? "Home on Y+ 5m" : "HOMING", sty, GUILayout.ExpandWidth(true)))
+	            _homeOnRelativePosition = !_homeOnRelativePosition;
+			
+		}
         GUILayout.Box("Rel Vel : " + _localRelativeVelocity.x.ToString("F2") + ", " + _localRelativeVelocity.y.ToString("F2") + ", " + _localRelativeVelocity.z.ToString("F2"));
         GUILayout.Box("Rel Pos : " + _localRelativePosition.x.ToString("F2") + ", " + _localRelativePosition.y.ToString("F2") + ", " + _localRelativePosition.z.ToString("F2"));
 
