@@ -59,15 +59,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <None Include="Parts\RendezMe\part.cfg" />
-    <None Include="Parts\RendezMe\rcsTank.DAE" />
-    <None Include="Parts\RendezMe\mesh\mesh2.msh" />
-    <None Include="Parts\RendezMe\mesh\mesh3.msh" />
-    <None Include="Parts\RendezMe\mesh\model.mdl" />
-    <None Include="Parts\RendezMe\mesh\tangents.v4" />
-    <None Include="Parts\RendezMe\textures\rcsTank_tex.png" />
-    <None Include="Plugins\RendezMe.dll" />
-    <None Include="README" />
-  </ItemGroup>
 </Project>
