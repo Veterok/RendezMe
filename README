@@ -1,14 +1,14 @@
 Simple KSP 0.14.3 compatible Rendezvous Autopilot
 
-Enhanced version of RinComp 0.4 (see http://kerbalspaceprogram.com/forum/index.php?topic=8524.0)
+RinComp 0.5 Alpha (see http://kerbalspaceprogram.com/forum/index.php?topic=8524.0)
 
 To use:
-
-0. Build a spaceship with the RendezMe part.
+* Features added by kompressor in RendezMe can be activated by changing automation = false to automation = true in the part.cfg file
+0. Build a spaceship with the RinComp part.
 
 1. Get into a circular orbit with radius equal to target's periapsis. (I recommend http://kerbalspaceprogram.com/forum/index.php?topic=8449.0 for this purpose)
 
-2. Click OPEN on RendezMe, and choose your target spaceship (they are sorted by distance, closest first)
+2. Click OPEN on RinComp, and choose your target spaceship (they are sorted by distance, closest first)
 
 3. Choose Align Planes. When you reach the ascending or descending node, you can use the Orbit Normal or Anti Normal buttons to point your ship in in the right direction relative to the orbit to change inclination. Fire your engine until relative inclination is zero or nearly so. Click "Align Planes" at the top when you're done to get back to the main menu.
 
