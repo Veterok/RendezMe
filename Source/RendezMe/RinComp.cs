@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Extensions;
 using UnityEngine;
 
-public class RendezMe : Part
+public class RinComp : Part
 {
 
 //advanced autopilot capabilities can be turned on or off in the .cfg file with the automation variable.
@@ -520,7 +520,7 @@ public class RendezMe : Part
             return;
 
         GUI.skin = HighLogic.Skin;
-        WindowPos = GUILayout.Window(WindowIDBase, WindowPos, WindowGUI, "RendezMe", GUILayout.MinWidth(200));
+        WindowPos = GUILayout.Window(WindowIDBase, WindowPos, WindowGUI, "RinComp", GUILayout.MinWidth(200));
     }
 
     #endregion
